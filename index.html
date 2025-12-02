@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="System rezerwacji biletów - prototyp interfejsu">
+    <title>Rezerwacja Biletów - System Sprzedaży Biletów</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="showScreen('home')">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#logoGradient)"/>
+                    <path d="M16 8L12 16H20L16 24L20 16H12L16 8Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#8b5cf6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>TicketHub</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showScreen('home')">Strona główna</a>
+                <a href="#" onclick="showScreen('events')">Wydarzenia</a>
+                <a href="#" onclick="showScreen('cart')">
+                    Koszyk
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary" onclick="showScreen('login')">Zaloguj się</button>
+                <button class="btn-primary" onclick="showScreen('register')">Zarejestruj się</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Screen -->
+    <section id="home" class="screen active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Odkryj <span class="gradient-text">wyjątkowe</span> wydarzenia</h1>
+                <p class="hero-subtitle">Znajdź i zarezerwuj bilety na koncerty, spektakle, wydarzenia sportowe i wiele więcej</p>
+                
+                <div class="search-box">
+                    <div class="search-input-group">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <input type="text" placeholder="Szukaj wydarzeń, artystów, miejsc..." class="search-input">
+                    </div>
+                    <div class="search-filters">
+                        <select class="filter-select">
+                            <option>Wszystkie kategorie</option>
+                            <option>Koncerty</option>
+                            <option>Spektakle</option>
+                            <option>Sport</option>
+                            <option>Komedia</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Wszystkie miasta</option>
+                            <option>Warszawa</option>
+                            <option>Kraków</option>
+                            <option>Wrocław</option>
+                            <option>Gdańsk</option>
+                        </select>
+                        <button class="btn-primary" onclick="showScreen('events')">Szukaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">Popularne wydarzenia</h2>
+            <div class="events-grid">
+                <div class="event-card" onclick="showScreen('event-details')">
+                    <div class="event-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span class="event-badge">Muzyka</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">Koncert Symfoniczny</h3>
+                        <p class="event-location">📍 Filharmonia Narodowa, Warszawa</p>
+                        <p class="event-date">🗓️ 15 grudnia 2025, 19:00</p>
+                        <div class="event-footer">
+                            <span class="event-price">od 89 zł</span>
+                            <button class="btn-small">Kup bilet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" onclick="showScreen('event-details')">
+                    <div class="event-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <span class="event-badge">Teatr</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">Hamlet</h3>
+                        <p class="event-location">📍 Teatr Wielki, Kraków</p>
+                        <p class="event-date">🗓️ 20 grudnia 2025, 18:30</p>
+                        <div class="event-footer">
+                            <span class="event-price">od 120 zł</span>
+                            <button class="btn-small">Kup bilet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" onclick="showScreen('event-details')">
+                    <div class="event-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <span class="event-badge">Sport</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">Mecz Ekstraklasy</h3>
+                        <p class="event-location">📍 Stadion Narodowy, Warszawa</p>
+                        <p class="event-date">🗓️ 22 grudnia 2025, 17:00</p>
+                        <div class="event-footer">
+                            <span class="event-price">od 45 zł</span>
+                            <button class="btn-small">Kup bilet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" onclick="showScreen('event-details')">
+                    <div class="event-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <span class="event-badge">Komedia</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">Stand-up Comedy Night</h3>
+                        <p class="event-location">📍 Klub Studio, Wrocław</p>
+                        <p class="event-date">🗓️ 18 grudnia 2025, 20:00</p>
+                        <div class="event-footer">
+                            <span class="event-price">od 60 zł</span>
+                            <button class="btn-small">Kup bilet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events List Screen -->
+    <section id="events" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <h1>Wszystkie wydarzenia</h1>
+                <p class="subtitle">Znaleziono 127 wydarzeń</p>
+            </div>
+
+            <div class="filters-sidebar-layout">
+                <aside class="filters-sidebar">
+                    <h3>Filtry</h3>
+                    
+                    <div class="filter-group">
+                        <h4>Kategoria</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" checked>
+                            <span>Wszystkie</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox">
+                            <span>Koncerty</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox">
+                            <span>Teatr</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox">
+                            <span>Sport</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox">
+                            <span>Komedia</span>
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Zakres dat</h4>
+                        <input type="date" class="filter-input">
+                        <span class="filter-separator">do</span>
+                        <input type="date" class="filter-input">
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Zakres cen (zł)</h4>
+                        <input type="number" placeholder="Min" class="filter-input">
+                        <input type="number" placeholder="Max" class="filter-input">
+                    </div>
+
+                    <button class="btn-primary btn-block">Zastosuj filtry</button>
+                </aside>
+
+                <div class="events-list">
+                    <div class="event-list-item" onclick="showScreen('event-details')">
+                        <div class="event-list-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                        <div class="event-list-content">
+                            <div>
+                                <span class="event-category">Muzyka</span>
+                                <h3>Koncert Symfoniczny</h3>
+                                <p class="event-meta">📍 Filharmonia Narodowa, Warszawa • 🗓️ 15 grudnia 2025, 19:00</p>
+                                <p class="event-description">Niezapomniany wieczór z muzyką klasyczną w wykonaniu najlepszych muzyków.</p>
+                            </div>
+                            <div class="event-list-action">
+                                <span class="price-large">od 89 zł</span>
+                                <button class="btn-primary">Zobacz szczegóły</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-list-item" onclick="showScreen('event-details')">
+                        <div class="event-list-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                        <div class="event-list-content">
+                            <div>
+                                <span class="event-category">Teatr</span>
+                                <h3>Hamlet</h3>
+                                <p class="event-meta">📍 Teatr Wielki, Kraków • 🗓️ 20 grudnia 2025, 18:30</p>
+                                <p class="event-description">Klasyczny dramat Shakespearea w nowoczesnej interpretacji.</p>
+                            </div>
+                            <div class="event-list-action">
+                                <span class="price-large">od 120 zł</span>
+                                <button class="btn-primary">Zobacz szczegóły</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-list-item" onclick="showScreen('event-details')">
+                        <div class="event-list-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                        <div class="event-list-content">
+                            <div>
+                                <span class="event-category">Sport</span>
+                                <h3>Mecz Ekstraklasy</h3>
+                                <p class="event-meta">📍 Stadion Narodowy, Warszawa • 🗓️ 22 grudnia 2025, 17:00</p>
+                                <p class="event-description">Emocjonujące spotkanie najlepszych drużyn polskiej ekstraklasy.</p>
+                            </div>
+                            <div class="event-list-action">
+                                <span class="price-large">od 45 zł</span>
+                                <button class="btn-primary">Zobacz szczegóły</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Screen -->
+    <section id="event-details" class="screen">
+        <div class="event-hero" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22%23333%22/></svg>');">
+            <div class="container">
+                <button class="btn-back" onclick="showScreen('events')">← Powrót</button>
+                <h1 class="event-hero-title">Koncert Symfoniczny</h1>
+                <p class="event-hero-subtitle">Orkiestra Filharmonii Narodowej</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="event-details-layout">
+                <div class="event-main-content">
+                    <div class="info-card">
+                        <h2>Informacje o wydarzeniu</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-icon">📍</span>
+                                <div>
+                                    <strong>Miejsce</strong>
+                                    <p>Filharmonia Narodowa</p>
+                                    <p class="text-muted">ul. Jasna 5, Warszawa</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">🗓️</span>
+                                <div>
+                                    <strong>Data i godzina</strong>
+                                    <p>15 grudnia 2025</p>
+                                    <p class="text-muted">Godz. 19:00</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">⏱️</span>
+                                <div>
+                                    <strong>Czas trwania</strong>
+                                    <p>Około 2 godzin 30 minut</p>
+                                    <p class="text-muted">Z przerwą</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">🎭</span>
+                                <div>
+                                    <strong>Kategoria</strong>
+                                    <p>Muzyka klasyczna</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h2>Opis</h2>
+                        <p>Zapraszamy na niezapomniany wieczór z muzyką klasyczną. Orkiestra Filharmonii Narodowej wykona najpiękniejsze utwory wielkich mistrzów. W programie między innymi symfonie Beethovena, Mozarta oraz Czajkowskiego.</p>
+                        <p>Koncert poprowadzi znakomity dyrygent, maestro Jan Kowalski. Solistą wieczoru będzie światowej sławy pianista, laureat wielu prestiżowych konkursów.</p>
+                        <p>To doskonała okazja, aby zanurzyć się w świecie muzyki klasycznej i doświadczyć niezwykłych emocji.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h2>Program koncertu</h2>
+                        <ul class="program-list">
+                            <li>Ludwig van Beethoven - Symfonia nr 5 c-moll op. 67</li>
+                            <li>Wolfgang Amadeus Mozart - Koncert fortepianowy nr 21 C-dur KV 467</li>
+                            <li><em>Przerwa (15 minut)</em></li>
+                            <li>Piotr Czajkowski - Symfonia nr 6 h-moll op. 74 "Patetyczna"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="event-sidebar">
+                    <div class="booking-card">
+                        <h3>Rezerwacja biletów</h3>
+                        
+                        <div class="price-tiers">
+                            <div class="price-tier">
+                                <div class="price-tier-name">Balkon</div>
+                                <div class="price-tier-price">89 zł</div>
+                            </div>
+                            <div class="price-tier selected">
+                                <div class="price-tier-name">Parter (środek)</div>
+                                <div class="price-tier-price">149 zł</div>
+                            </div>
+                            <div class="price-tier">
+                                <div class="price-tier-name">Miejsca VIP</div>
+                                <div class="price-tier-price">249 zł</div>
+                            </div>
+                        </div>
+
+                        <div class="availability-info">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <circle cx="8" cy="8" r="8" fill="#10b981"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span>Dostępnych miejsc: 124</span>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="showScreen('seat-selection')">
+                            Wybierz miejsca
+                        </button>
+                    </div>
+
+                    <div class="info-card-small">
+                        <h4>Organizator</h4>
+                        <p><strong>Filharmonia Narodowa</strong></p>
+                        <p class="text-muted">Kontakt: kontakt@filharmonia.pl</p>
+                        <p class="text-muted">Tel: +48 22 551 7111</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seat Selection Screen -->
+    <section id="seat-selection" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <button class="btn-back" onclick="showScreen('event-details')">← Powrót</button>
+                <div>
+                    <h1>Wybór miejsc</h1>
+                    <p class="subtitle">Koncert Symfoniczny • 15 grudnia 2025, 19:00</p>
+                </div>
+            </div>
+
+            <div class="seat-selection-layout">
+                <div class="seat-map-container">
+                    <div class="stage">SCENA</div>
+                    
+                    <div class="seat-grid">
+                        <!-- VIP Section -->
+                        <div class="section-label">Sektor VIP</div>
+                        <div class="seat-row">
+                            <span class="row-label">1</span>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '1', '1')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '1', '2')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '1', '3')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '1', '4')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '1', '5')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '1', '6')"></div>
+                        </div>
+                        <div class="seat-row">
+                            <span class="row-label">2</span>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '2', '1')"></div>
+                            <div class="seat taken"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '2', '3')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '2', '4')"></div>
+                            <div class="seat taken"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'VIP', '2', '6')"></div>
+                        </div>
+
+                        <!-- Regular Section -->
+                        <div class="section-label">Parter</div>
+                        <div class="seat-row">
+                            <span class="row-label">3</span>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '1')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '2')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '3')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '4')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '5')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '6')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '7')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '3', '8')"></div>
+                        </div>
+                        <div class="seat-row">
+                            <span class="row-label">4</span>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '4', '1')"></div>
+                            <div class="seat taken"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '4', '3')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '4', '4')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '4', '5')"></div>
+                            <div class="seat taken"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '4', '7')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '4', '8')"></div>
+                        </div>
+                        <div class="seat-row">
+                            <span class="row-label">5</span>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '1')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '2')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '3')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '4')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '5')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '6')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '7')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Parter', '5', '8')"></div>
+                        </div>
+
+                        <!-- Balcony Section -->
+                        <div class="section-label">Balkon</div>
+                        <div class="seat-row">
+                            <span class="row-label">6</span>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '1')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '2')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '3')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '4')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '5')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '6')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '7')"></div>
+                            <div class="seat available" onclick="toggleSeat(this, 'Balkon', '6', '8')"></div>
+                        </div>
+                    </div>
+
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="seat available"></div>
+                            <span>Dostępne</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="seat selected"></div>
+                            <span>Wybrane</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="seat taken"></div>
+                            <span>Zajęte</span>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="selection-sidebar">
+                    <div class="selection-card">
+                        <h3>Wybrane miejsca</h3>
+                        <div id="selected-seats" class="selected-seats-list">
+                            <p class="empty-state">Nie wybrano jeszcze żadnych miejsc</p>
+                        </div>
+
+                        <div class="selection-summary">
+                            <div class="summary-row">
+                                <span>Liczba biletów:</span>
+                                <strong id="ticket-count">0</strong>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Suma:</span>
+                                <strong id="total-price">0 zł</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="showScreen('cart')" id="continue-btn" disabled>
+                            Przejdź do koszyka
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Screen -->
+    <section id="cart" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <h1>Koszyk</h1>
+                <p class="subtitle">Sprawdź swoje zamówienie przed opłaceniem</p>
+            </div>
+
+            <div class="cart-layout">
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <h3>Koncert Symfoniczny</h3>
+                            <button class="btn-text">Usuń</button>
+                        </div>
+                        <p class="cart-item-meta">📍 Filharmonia Narodowa, Warszawa • 🗓️ 15 grudnia 2025, 19:00</p>
+                        
+                        <div class="cart-tickets">
+                            <div class="ticket-item">
+                                <div>
+                                    <strong>Parter - Rząd 3, Miejsce 4</strong>
+                                    <p class="text-muted">Bilet normalny</p>
+                                </div>
+                                <span class="ticket-price">149 zł</span>
+                            </div>
+                            <div class="ticket-item">
+                                <div>
+                                    <strong>Parter - Rząd 3, Miejsce 5</strong>
+                                    <p class="text-muted">Bilet normalny</p>
+                                </div>
+                                <span class="ticket-price">149 zł</span>
+                            </div>
+                            <div class="ticket-item">
+                                <div>
+                                    <strong>Balkon - Rząd 6, Miejsce 2</strong>
+                                    <p class="text-muted">Bilet ulgowy</p>
+                                </div>
+                                <span class="ticket-price">89 zł</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promo-code">
+                        <input type="text" placeholder="Kod promocyjny" class="promo-input">
+                        <button class="btn-secondary">Zastosuj</button>
+                    </div>
+                </div>
+
+                <aside class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Podsumowanie</h3>
+                        
+                        <div class="summary-details">
+                            <div class="summary-row">
+                                <span>Bilety (3 szt.)</span>
+                                <span>387 zł</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Opłata serwisowa</span>
+                                <span>12 zł</span>
+                            </div>
+                            <div class="summary-row discount">
+                                <span>Rabat (kod: MUSIC10)</span>
+                                <span>-38,70 zł</span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="summary-row total">
+                                <span>Do zapłaty</span>
+                                <strong>360,30 zł</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="showScreen('payment')">
+                            Przejdź do płatności
+                        </button>
+
+                        <div class="payment-icons">
+                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                <rect width="40" height="24" rx="4" fill="#1434CB"/>
+                                <text x="20" y="16" font-size="10" fill="white" text-anchor="middle" font-weight="bold">VISA</text>
+                            </svg>
+                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                <rect width="40" height="24" rx="4" fill="#EB001B"/>
+                                <circle cx="15" cy="12" r="8" fill="#EB001B"/>
+                                <circle cx="25" cy="12" r="8" fill="#F79E1B"/>
+                            </svg>
+                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                <rect width="40" height="24" rx="4" fill="#00457C"/>
+                                <text x="20" y="16" font-size="8" fill="white" text-anchor="middle" font-weight="bold">PayPal</text>
+                            </svg>
+                        </div>
+
+                        <p class="secure-note">🔒 Płatność zabezpieczona certyfikatem SSL</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Screen -->
+    <section id="login" class="screen">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>Zaloguj się</h1>
+                <p class="auth-subtitle">Witaj ponownie! Zaloguj się do swojego konta</p>
+
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="email">Adres e-mail</label>
+                        <input type="email" id="email" class="form-input" placeholder="twoj@email.pl">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Hasło</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••">
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Zapamiętaj mnie</span>
+                        </label>
+                        <a href="#" class="link">Zapomniałeś hasła?</a>
+                    </div>
+
+                    <button type="button" class="btn-primary btn-large" onclick="showScreen('home')">Zaloguj się</button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>lub</span>
+                </div>
+
+                <button class="btn-social">
+                    <svg width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M19.6 10.23c0-.82-.1-1.42-.25-2.05H10v3.72h5.5c-.15.96-.74 2.31-2.04 3.22v2.45h3.16c1.89-1.73 2.98-4.3 2.98-7.34z" fill="#4285F4"/>
+                        <path d="M13.46 15.13c-.83.59-1.96 1-3.46 1-2.64 0-4.88-1.74-5.68-4.15H1.07v2.52C2.72 17.75 6.09 20 10 20c2.7 0 4.96-.89 6.62-2.42l-3.16-2.45z" fill="#34A853"/>
+                        <path d="M3.99 10c0-.69.12-1.35.32-1.97V5.51H1.07A9.973 9.973 0 000 10c0 1.61.39 3.14 1.07 4.49l3.24-2.52c-.2-.62-.32-1.28-.32-1.97z" fill="#FBBC05"/>
+                        <path d="M10 3.88c1.88 0 3.13.81 3.85 1.48l2.84-2.76C14.96.99 12.7 0 10 0 6.09 0 2.72 2.25 1.07 5.51l3.24 2.52C5.12 5.62 7.36 3.88 10 3.88z" fill="#EA4335"/>
+                    </svg>
+                    Kontynuuj przez Google
+                </button>
+
+                <p class="auth-footer">
+                    Nie masz jeszcze konta? 
+                    <a href="#" onclick="showScreen('register')" class="link">Zarejestruj się</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Register Screen -->
+    <section id="register" class="screen">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>Załóż konto</h1>
+                <p class="auth-subtitle">Dołącz do nas i zarezerwuj swoje pierwsze bilety</p>
+
+                <form class="auth-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstname">Imię</label>
+                            <input type="text" id="firstname" class="form-input" placeholder="Jan">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Nazwisko</label>
+                            <input type="text" id="lastname" class="form-input" placeholder="Kowalski">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">Adres e-mail</label>
+                        <input type="email" id="reg-email" class="form-input" placeholder="twoj@email.pl">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-password">Hasło</label>
+                        <input type="password" id="reg-password" class="form-input" placeholder="Minimum 8 znaków">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Potwierdź hasło</label>
+                        <input type="password" id="confirm-password" class="form-input" placeholder="Powtórz hasło">
+                    </div>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span>Akceptuję <a href="#" class="link">regulamin</a> i <a href="#" class="link">politykę prywatności</a></span>
+                    </label>
+
+                    <button type="button" class="btn-primary btn-large" onclick="showScreen('home')">Utwórz konto</button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>lub</span>
+                </div>
+
+                <button class="btn-social">
+                    <svg width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M19.6 10.23c0-.82-.1-1.42-.25-2.05H10v3.72h5.5c-.15.96-.74 2.31-2.04 3.22v2.45h3.16c1.89-1.73 2.98-4.3 2.98-7.34z" fill="#4285F4"/>
+                        <path d="M13.46 15.13c-.83.59-1.96 1-3.46 1-2.64 0-4.88-1.74-5.68-4.15H1.07v2.52C2.72 17.75 6.09 20 10 20c2.7 0 4.96-.89 6.62-2.42l-3.16-2.45z" fill="#34A853"/>
+                        <path d="M3.99 10c0-.69.12-1.35.32-1.97V5.51H1.07A9.973 9.973 0 000 10c0 1.61.39 3.14 1.07 4.49l3.24-2.52c-.2-.62-.32-1.28-.32-1.97z" fill="#FBBC05"/>
+                        <path d="M10 3.88c1.88 0 3.13.81 3.85 1.48l2.84-2.76C14.96.99 12.7 0 10 0 6.09 0 2.72 2.25 1.07 5.51l3.24 2.52C5.12 5.62 7.36 3.88 10 3.88z" fill="#EA4335"/>
+                    </svg>
+                    Zarejestruj się przez Google
+                </button>
+
+                <p class="auth-footer">
+                    Masz już konto? 
+                    <a href="#" onclick="showScreen('login')" class="link">Zaloguj się</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Screen -->
+    <section id="payment" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <button class="btn-back" onclick="showScreen('cart')">← Powrót do koszyka</button>
+                <div>
+                    <h1>Płatność</h1>
+                    <p class="subtitle">Uzupełnij dane i dokonaj płatności</p>
+                </div>
+            </div>
+
+            <div class="payment-layout">
+                <div class="payment-form-container">
+                    <div class="payment-step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Dane kontaktowe</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Imię</label>
+                                <input type="text" class="form-input" placeholder="Jan">
+                            </div>
+                            <div class="form-group">
+                                <label>Nazwisko</label>
+                                <input type="text" class="form-input" placeholder="Kowalski">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-input" placeholder="twoj@email.pl">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input type="tel" class="form-input" placeholder="+48 123 456 789">
+                        </div>
+                    </div>
+
+                    <div class="payment-step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Metoda płatności</h3>
+                        </div>
+                        <div class="payment-methods">
+                            <label class="payment-method selected">
+                                <input type="radio" name="payment" checked>
+                                <div class="method-content">
+                                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                        <rect width="40" height="24" rx="4" fill="#1434CB"/>
+                                        <text x="20" y="16" font-size="10" fill="white" text-anchor="middle" font-weight="bold">VISA</text>
+                                    </svg>
+                                    <span>Karta płatnicza</span>
+                                </div>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment">
+                                <div class="method-content">
+                                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                        <rect width="40" height="24" rx="4" fill="#00457C"/>
+                                        <text x="20" y="16" font-size="8" fill="white" text-anchor="middle" font-weight="bold">PayPal</text>
+                                    </svg>
+                                    <span>PayPal</span>
+                                </div>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment">
+                                <div class="method-content">
+                                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                        <rect width="40" height="24" rx="4" fill="#e11d48"/>
+                                        <text x="20" y="16" font-size="8" fill="white" text-anchor="middle" font-weight="bold">BLIK</text>
+                                    </svg>
+                                    <span>BLIK</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Numer karty</label>
+                            <input type="text" class="form-input" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Data ważności</label>
+                                <input type="text" class="form-input" placeholder="MM/RR">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" class="form-input" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-step">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Zapisz kartę dla przyszłych transakcji</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Akceptuję <a href="#" class="link">regulamin</a> i <a href="#" class="link">politykę prywatności</a></span>
+                        </label>
+                    </div>
+                </div>
+
+                <aside class="payment-summary">
+                    <div class="summary-card">
+                        <h3>Twoje zamówienie</h3>
+                        
+                        <div class="order-item">
+                            <strong>Koncert Symfoniczny</strong>
+                            <p class="text-muted">15 grudnia 2025, 19:00</p>
+                            <p class="text-muted">Filharmonia Narodowa</p>
+                        </div>
+
+                        <div class="tickets-summary">
+                            <div class="ticket-line">
+                                <span>2× Parter (R3, M4-5)</span>
+                                <span>298 zł</span>
+                            </div>
+                            <div class="ticket-line">
+                                <span>1× Balkon (R6, M2)</span>
+                                <span>89 zł</span>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="summary-row">
+                            <span>Bilety</span>
+                            <span>387 zł</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Opłata serwisowa</span>
+                            <span>12 zł</span>
+                        </div>
+                        <div class="summary-row discount">
+                            <span>Rabat</span>
+                            <span>-38,70 zł</span>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="summary-row total">
+                            <span>Suma</span>
+                            <strong>360,30 zł</strong>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="showPaymentSuccess()">
+                            Zapłać 360,30 zł
+                        </button>
+
+                        <p class="secure-note">🔒 Płatność jest w pełni zabezpieczona</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
