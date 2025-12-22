@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="System rezerwacji biletów - prototyp interfejsu">
+    <title>Rezerwacja Biletów - System Sprzedaży Biletów</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="showScreen('home')">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#logoGradient)"/>
+                    <path d="M16 8L12 16H20L16 24L20 16H12L16 8Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#8b5cf6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>TicketHub</span>
+            </div>
+            <div class="nav-links" id="nav-links-container">
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary" onclick="showScreen('login')">Zaloguj się</button>
+                <button class="btn-primary" onclick="showScreen('register')">Zarejestruj się</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Screen -->
+    <section id="home" class="screen active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Odkryj <span class="gradient-text">wyjątkowe</span> wydarzenia</h1>
+                <p class="hero-subtitle">Znajdź i zarezerwuj bilety na koncerty, spektakle, wydarzenia sportowe i wiele więcej</p>
+                
+                <div class="search-box">
+                    <div class="search-input-group">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="home-search-input" placeholder="Szukaj wydarzeń, artystów..." class="search-input">
+                </div>
+                <div class="search-filters">
+                    <select class="filter-select" id="home-category-select">
+                        <option value="">Wszystkie kategorie</option> <option value="Koncert">Koncerty</option>
+                        <option value="Teatr">Spektakle</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Kino">Kino</option>
+                    </select>
+        
+                    <select class="filter-select" id="home-city-select">
+                        <option value="">Wszystkie miasta</option>
+                        <option value="Warszawa">Warszawa</option>
+                        <option value="Kraków">Kraków</option>
+                        <option value="Wrocław">Wrocław</option>
+                        <option value="Gdańsk">Gdańsk</option>
+                    </select>
+        
+        <button class="btn-primary" onclick="handleHomeSearch()">Szukaj</button>
+    </div>
+</div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">Popularne wydarzenia</h2>
+            <div class="events-grid" id="events-container">
+            </div>
+        </div>
+    </section>
+
+    <!-- Events List Screen -->
+    <section id="events" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <h1>Wszystkie wydarzenia</h1>
+                <p class="subtitle" id="events-count">Ładowanie...</p>
+            </div>
+
+            <div class="filters-sidebar-layout">
+                
+                <aside class="filters-sidebar">
+                    <h3>Filtry</h3>
+                    
+                    <div class="filter-group">
+                        <h4>Szukaj</h4>
+                        <input type="text" id="filter-search" placeholder="Nazwa wydarzenia..." class="filter-input">
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Miasto</h4>
+                        <select id="filter-city" class="filter-input">
+                            <option value="">Wszystkie miasta</option>
+                            <option value="Warszawa">Warszawa</option>
+                            <option value="Kraków">Kraków</option>
+                            <option value="Wrocław">Wrocław</option>
+                            <option value="Gdańsk">Gdańsk</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Kategoria</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="category-checkbox" value="Muzyka" checked>
+                            <span>Muzyka / Koncerty</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="category-checkbox" value="Teatr" checked>
+                            <span>Teatr</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="category-checkbox" value="Sport" checked>
+                            <span>Sport</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="category-checkbox" value="Kino" checked>
+                            <span>Kino</span>
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Zakres cen (zł)</h4>
+                        <input type="number" id="filter-price-min" placeholder="Min" class="filter-input">
+                        <input type="number" id="filter-price-max" placeholder="Max" class="filter-input">
+                    </div>
+
+                    <button class="btn-primary btn-block" onclick="applyFilters()">Zastosuj filtry</button>
+                    <button class="btn-text btn-block" style="margin-top:10px" onclick="resetFilters()">Wyczyść filtry</button>
+                </aside>
+
+                <div class="events-list" id="all-events-container">
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Screen -->
+    <section id="event-details" class="screen">
+        <div class="event-hero" id="detail-hero" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding-bottom: 80px;">
+            <div class="container">
+                <button class="btn-back" style="color: white; opacity: 0.8;" onclick="showScreen('events')">← Powrót</button>
+                <h1 class="event-hero-title" id="detail-title" style="color: white;">Ładowanie...</h1>
+                <p class="event-hero-subtitle" id="detail-subtitle" style="color: rgba(255,255,255,0.9);">...</p>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top: -40px; position: relative; z-index: 2;">
+            <div class="event-details-layout">
+                
+                <div class="main-content">
+                    
+                    <div class="info-card">
+                        <h2>Informacje o wydarzeniu</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-icon">📍</span>
+                                <div>
+                                    <strong>Miejsce</strong>
+                                    <p id="detail-location">...</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">🗓️</span>
+                                <div>
+                                    <strong>Data i godzina</strong>
+                                    <p id="detail-date">...</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">⏱️</span>
+                                <div>
+                                    <strong>Czas trwania</strong>
+                                    <p id="detail-duration">...</p> 
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">🎭</span>
+                                <div>
+                                    <strong>Kategoria</strong>
+                                    <p id="detail-category">...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h2>Opis</h2>
+                        <p id="detail-description" style="white-space: pre-line;">...</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h2>Program koncertu</h2>
+                        <ul class="program-list" id="detail-program">
+                            <li>Brak informacji o programie.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="booking-card" style="position: sticky; top: 100px;">
+                        <h3>Bilety</h3>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span style="color: var(--text-secondary);">Cena od:</span>
+                                <strong style="font-size: 20px; color: var(--primary-light);" id="stats-price">...</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--text-secondary);">Dostępne miejsca:</span>
+                                <span class="event-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success);" id="stats-count">...</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="loadSeats(window.currentEventId)">
+                            Wybierz miejsca
+                        </button>
+                    </div>
+
+                    <div class="info-card-small">
+                        <h4>Organizator</h4>
+                        <p><strong>TicketHub Events</strong></p>
+                        <p class="text-muted">Kontakt: pomoc@tickethub.pl</p>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Seat Selection Screen -->
+    <section id="seat-selection" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <button class="btn-back" onclick="showScreen('event-details')">← Powrót</button>
+                <div>
+                    <h1>Wybór miejsc</h1>
+                    <p class="subtitle">Koncert Symfoniczny • 15 grudnia 2025, 19:00</p>
+                </div>
+            </div>
+
+            <div class="seat-selection-layout">
+                <div class="seat-map-container">
+                    <div class="stage">SCENA</div>
+                    
+                    <div class="seat-grid" id="seats-container">
+                        </div>
+
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="seat available"></div>
+                            <span>Dostępne</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="seat selected"></div>
+                            <span>Wybrane</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="seat taken"></div>
+                            <span>Zajęte</span>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="selection-sidebar">
+                    <div class="selection-card">
+                        <h3>Wybrane miejsca</h3>
+                        <div id="selected-seats" class="selected-seats-list">
+                            <p class="empty-state">Nie wybrano jeszcze żadnych miejsc</p>
+                        </div>
+
+                        <div class="selection-summary">
+                            <div class="summary-row">
+                                <span>Liczba biletów:</span>
+                                <strong id="ticket-count">0</strong>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Suma:</span>
+                                <strong id="total-price">0 zł</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="updateCartScreen()" id="continue-btn" disabled>
+                            Przejdź do koszyka
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Screen -->
+    <section id="cart" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <button class="btn-back" onclick="showScreen('seat-selection')">← Wróć do wyboru miejsc</button>
+                
+                <h1>Koszyk</h1>
+                <p class="subtitle">Sprawdź swoje zamówienie przed opłaceniem</p>
+            </div>
+
+            <div class="cart-layout">
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <h3 id="cart-event-title">Ładowanie...</h3> 
+                            <button class="btn-text" onclick="clearCart()">Wyczyść koszyk</button>
+                        </div>
+                        <p class="cart-item-meta" id="cart-event-meta">...</p>
+                        
+                        <div class="cart-tickets" id="cart-tickets-container">
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Podsumowanie</h3>
+                        <div class="summary-details">
+                            <div class="summary-row">
+                                <span id="cart-summary-count">Bilety (0 szt.)</span>
+                                <span id="cart-summary-subtotal">0 zł</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Opłata serwisowa</span>
+                                <span>0 zł</span> </div>
+                            <div class="divider"></div>
+                            <div class="summary-row total">
+                                <span>Do zapłaty</span>
+                                <strong id="cart-total-final">0 zł</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="updatePaymentScreen()">
+                            Przejdź do płatności
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Tickets Screen -->
+   <section id="my-account" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <h1>Moje Konto</h1>
+                <p class="subtitle">Zarządzaj swoimi danymi i biletami</p>
+            </div>
+
+            <div class="account-layout">
+                <aside class="account-sidebar">
+                    <div class="user-profile-summary">
+                        <div class="user-avatar" id="account-avatar">JK</div>
+                        <div class="user-info">
+                            <h3 id="account-name">Jan Kowalski</h3>
+                            <p id="account-email">jan@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="account-nav">
+                        <button class="account-nav-item active" onclick="switchAccountTab('tickets')">
+                            🎟️ Moje Bilety
+                        </button>
+                        <button class="account-nav-item" onclick="switchAccountTab('profile')">
+                            👤 Dane profilowe
+                        </button>
+                        <button class="account-nav-item logout" onclick="handleLogout()">
+                            🚪 Wyloguj się
+                        </button>
+                    </nav>
+                </aside>
+
+                <div class="account-content">
+                    
+                    <div id="tab-tickets" class="account-tab active">
+                        <h2>Historia zamówień</h2>
+                        <div id="account-tickets-container">
+                            <p class="loading-text">Ładowanie biletów...</p>
+                        </div>
+                    </div>
+
+                    <div id="tab-profile" class="account-tab" style="display: none;">
+                        <h2>Twoje dane</h2>
+                        <div class="profile-card">
+                            <form onsubmit="event.preventDefault(); alert('Funkcja zapisu danych będzie dostępna wkrótce!');">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Imię</label>
+                                        <input type="text" id="profile-firstname" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nazwisko</label>
+                                        <input type="text" id="profile-lastname" class="form-input">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="profile-email" class="form-input" readonly style="opacity: 0.7; cursor: not-allowed;" title="Emailu nie można zmienić">
+                                </div>
+                                <button class="btn-primary">Zapisz zmiany</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Screen -->
+    <section id="login" class="screen">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>Zaloguj się</h1>
+                <p class="auth-subtitle">Witaj ponownie! Zaloguj się do swojego konta</p>
+
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="email">Adres e-mail</label>
+                        <input type="email" id="email" class="form-input" placeholder="twoj@email.pl">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Hasło</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••">
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Zapamiętaj mnie</span>
+                        </label>
+                        <a href="#" class="link">Zapomniałeś hasła?</a>
+                    </div>
+
+                    <button type="button" class="btn-primary btn-large" onclick="handleLogin()">Zaloguj się</button>
+                </form>
+
+                <p class="auth-footer">
+                    Nie masz jeszcze konta? 
+                    <a href="#" onclick="showScreen('register')" class="link">Zarejestruj się</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Register Screen -->
+    <section id="register" class="screen">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>Załóż konto</h1>
+                <p class="auth-subtitle">Dołącz do nas i zarezerwuj swoje pierwsze bilety</p>
+
+                <form class="auth-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstname">Imię</label>
+                            <input type="text" id="firstname" class="form-input" placeholder="Jan">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Nazwisko</label>
+                            <input type="text" id="lastname" class="form-input" placeholder="Kowalski">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">Adres e-mail</label>
+                        <input type="email" id="reg-email" class="form-input" placeholder="twoj@email.pl">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-password">Hasło</label>
+                        <input type="password" id="reg-password" class="form-input" placeholder="Minimum 8 znaków">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Potwierdź hasło</label>
+                        <input type="password" id="confirm-password" class="form-input" placeholder="Powtórz hasło">
+                    </div>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span>Akceptuję <a href="#" class="link">regulamin</a> i <a href="#" class="link">politykę prywatności</a></span>
+                    </label>
+
+                    <button type="button" class="btn-primary btn-large" onclick="handleRegister()">Utwórz konto</button>
+                </form>
+
+                <p class="auth-footer">
+                    Masz już konto? 
+                    <a href="#" onclick="showScreen('login')" class="link">Zaloguj się</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Screen -->
+    <section id="payment" class="screen">
+        <div class="container">
+            <div class="page-header">
+                <button class="btn-back" onclick="showScreen('cart')">← Powrót do koszyka</button>
+                <div>
+                    <h1>Płatność</h1>
+                    <p class="subtitle">Uzupełnij dane i dokonaj płatności</p>
+                </div>
+            </div>
+
+            <div class="payment-layout">
+
+                <div class="payment-form-container">
+                    <div class="payment-step">
+                        <div class="guest-info-box">
+                            <div class="guest-icon">ℹ️</div>
+                                <div class="guest-text">
+                                    <strong>Nie masz konta? To nie problem!</strong>
+                                    <p>Nie musisz się rejestrować. Wypełnij poniższe dane, a bilet wyślemy na Twój adres e-mail.</p>
+                                </div>
+                            </div>
+
+                        <div class="payment-step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Dane kontaktowe</h3>
+                            </div>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
+                        </p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Imię</label>
+                                <input type="text" id="pay-firstname" class="form-input" placeholder="Jan">
+                            </div>
+                            <div class="form-group">
+                                <label>Nazwisko</label>
+                                <input type="text" id="pay-lastname" class="form-input" placeholder="Kowalski">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="pay-email" class="form-input" placeholder="twoj@email.pl">
+                        </div>
+                    </div>
+
+                    <div class="payment-step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Metoda płatności</h3>
+                        </div>
+
+                        <div class="payment-options-grid">
+                            <div class="payment-option" id="opt-blik" onclick="selectPaymentMethod('blik')">
+                                <div class="option-radio"></div>
+                                <div class="option-icon">BLIK</div> <span>BLIK</span>
+                            </div>
+                            <div class="payment-option" id="opt-card" onclick="selectPaymentMethod('card')">
+                                <div class="option-radio"></div>
+                                <div class="option-icon">💳</div>
+                                <span>Karta płatnicza</span>
+                            </div>
+                        </div>
+
+                        <div id="form-blik" class="payment-details-box" style="display: none;">
+                            <p style="margin-bottom: 12px; font-size: 14px;">Wpisz kod BLIK z aplikacji banku:</p>
+                            <div class="blik-input-wrapper">
+                                <input type="text" id="blik-code" class="blik-input" maxlength="6" placeholder="000 000" oninput="formatBlik(this)">
+                            </div>
+                            <p class="text-muted" style="margin-top: 8px; font-size: 12px; text-align: center;">Kod jest ważny przez 2 minuty</p>
+                        </div>
+
+                        <div id="form-card" class="payment-details-box" style="display: none;">
+                            <div class="form-group">
+                                <label>Numer karty</label>
+                                <div class="card-input-wrapper">
+                                    <input type="text" id="card-number" class="form-input" maxlength="19" placeholder="0000 0000 0000 0000" oninput="formatCard(this)">
+                                    <span class="card-icon">💳</span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Data ważności</label>
+                                    <input type="text" id="card-expiry" class="form-input" maxlength="5" placeholder="MM/RR" oninput="formatDate(this)">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV / CVC</label>
+                                    <input type="text" id="card-cvc" class="form-input" maxlength="3" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="payment-summary">
+                    <div class="summary-card">
+                        <h3>Twoje zamówienie</h3>
+                        
+                        <div class="order-item">
+                            <strong id="pay-event-title">...</strong>
+                            <p class="text-muted" id="pay-event-meta">...</p>
+                        </div>
+
+                        <div class="tickets-summary" id="pay-tickets-list">
+                            </div>
+
+                        <div class="divider"></div>
+
+                        <div class="summary-row total">
+                            <span>Suma</span>
+                            <strong id="pay-total">0 zł</strong>
+                        </div>
+
+                        <button class="btn-primary btn-large" onclick="processPayment()">
+                            Zapłać i zarezerwuj
+                        </button>
+
+                        <p class="secure-note">🔒 Płatność jest w pełni zabezpieczona</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <div id="qr-modal" class="modal-overlay" style="display: none;">
+        <div class="qr-modal-content">
+            <button class="close-modal" onclick="closeQRModal()">×</button>
+            <h3 style="margin-bottom: 10px;">Twój bilet wstępu</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Pokaż ten kod przy wejściu</p>
+            <img id="qr-image" src="" alt="Kod QR" style="display: block; margin: 0 auto; width: 180px; height: 180px; border-radius: 8px;">
+            <p style="margin-top: 20px; font-size: 13px; color: var(--text-muted);" id="qr-ticket-id">...</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
