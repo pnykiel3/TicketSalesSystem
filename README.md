@@ -1,4 +1,4 @@
-# TicketHubAI
+# TicketHub
 
 System do sprzedaży biletów online.
 
@@ -17,8 +17,8 @@ Aplikacja webowa do rezerwacji i sprzedaży biletów na wydarzenia. Zawiera:
 
 ### 1. Sklonuj repozytorium
 ```bash
-git clone https://github.com/TWOJE_REPO/TicketHubAI.git
-cd TicketHubAI
+git clone https://github.com/pnykiel3/TicketSalesSystem.git
+cd TicketSalesSystem
 ```
 
 ### 2. Uruchom aplikację
