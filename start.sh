@@ -9,6 +9,10 @@ NC='\033[0m' # No Color
 echo -e "${BLUE}🚀 Uruchamianie TicketHub...${NC}"
 echo ""
 
+# Automatyczne czyszczenie starych kontenerów (jeśli istnieją)
+echo -e "${BLUE}🧹 Sprawdzanie i usuwanie starych kontenerów...${NC}"
+docker rm -f tickethub_mysql tickethub_backend tickethub_frontend 2>/dev/null || true
+
 # Uruchom docker-compose
 docker-compose up -d
 
@@ -16,6 +20,14 @@ docker-compose up -d
 if [ $? -eq 0 ]; then
     echo ""
     echo -e "${GREEN}✅ Aplikacja uruchomiona pomyślnie!${NC}"
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo -e "${BLUE}📊 Status kontenerów:${NC}"
+    docker-compose ps
+    echo ""
+    echo -e "${BLUE}📝 Aby zobaczyć logi:${NC} docker-compose logs -f"
+    echo -e "${BLUE}🛑 Aby zatrzymać:${NC}  docker-compose down"
     echo ""
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo -e "${YELLOW}📱 Dostęp do aplikacji:${NC}"
@@ -45,14 +57,6 @@ if [ $? -eq 0 ]; then
         echo -e "${YELLOW}⚠️  Nie udało się wykryć IP lokalnego${NC}"
     fi
     
-    echo ""
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo ""
-    echo -e "${BLUE}📊 Status kontenerów:${NC}"
-    docker-compose ps
-    echo ""
-    echo -e "${BLUE}📝 Aby zobaczyć logi:${NC} docker-compose logs -f"
-    echo -e "${BLUE}🛑 Aby zatrzymać:${NC}  docker-compose down"
     echo ""
 else
     echo -e "${YELLOW}❌ Błąd podczas uruchamiania kontenerów${NC}"
