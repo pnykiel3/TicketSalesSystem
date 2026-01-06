@@ -24,9 +24,10 @@ services:
 
   # Backend API
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    image: pnykiel3/tickethub-backend:latest
     container_name: tickethub_backend
     restart: always
     environment:
@@ -45,9 +46,10 @@ services:
 
   # Frontend (Nginx)
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
+    image: pnykiel3/tickethub-frontend:latest
     container_name: tickethub_frontend
     restart: always
     ports:
