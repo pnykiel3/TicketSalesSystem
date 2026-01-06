@@ -25,6 +25,7 @@ cd TicketSalesSystem
 
 **Zalecane** - użyj skryptu startowego (wyświetla linki dostępu):
 ```bash
+chmod +x start.sh  # Jednorazowo - nadaj uprawnienia wykonywania
 ./start.sh
 ```
 
